@@ -3,9 +3,11 @@ const router = express.Router()
 
 const {
   helper,
-  tropipayPaymentCardsTest,
+  tropipayLoginTest,
 } = require('../controllers/tropipay.controller')
 
 router.get('/', helper)
+
+router.post('/login', tropipayLoginTest)
 
 module.exports = router
