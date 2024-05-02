@@ -6,4 +6,7 @@ const cors = require('cors')
 app.use(cors())
 app.use(express.json())
 
+const publicRoutes = require('./routes/public.routes')
+app.use('/', publicRoutes)
+
 module.exports = app
