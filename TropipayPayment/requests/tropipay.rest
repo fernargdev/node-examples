@@ -1,7 +1,25 @@
 @api = http://localhost:3003/api/tropipay
 
-# GET {{api}}
+### GET /tropipay
+GET {{api}}
 
-
-POST {{api}}/login
+### POST /tropipay/apy
+POST {{api}}/pay
 Content-Type: application/json
+Accept: 'application/json'
+
+{
+    "reference": "SP000521",
+    "concept": "Cakes and Coffee",
+    "description": "Only the best products",
+    "amount": 150,
+    "currency": "USD",
+    "lang": "es",
+    "urlSuccess": "https://iracuba.com/",
+    "urlFailed": "https://iracuba.com/",
+    "urlNotification": "https://iracuba.com/"
+}
+
+
+
+
