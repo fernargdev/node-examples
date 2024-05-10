@@ -5,27 +5,94 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home</title>
+
     <style>
-        * {
-            background-color: rgba(58, 57, 57);
-            color: white;
+        :root {
+            color: rgba(255, 255, 255, 0.87);
+            background-color: #242424;
+            line-height: 1.5;
+            font-weight: 400;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            width: 300px;
+            margin: 0 auto;
+        }
+
+        input {
+            margin-top: 10px;
+            padding: 5px;
+            border: 2px solid;
+            margin-bottom: 5px;
         }
 
         button {
-            border: 2px solid white;
+            margin: 0 auto;
+            margin-top: 10px;
+            width: 50px;
         }
     </style>
+
 </head>
 
 <body>
-
     <main>
         <header>
             <h1>Tropipay Payment</h1>
         </header>
 
-        <button>Pagar</button>
+        <form id="paymentForm">
+            <input type="text" id="reference" placeholder="Reference">
+            <input type="text" id="concept" placeholder="Concept">
+            <input type="text" id="description" placeholder="Description">
+            <input type="number" id="amount" placeholder="Amount">
+            <input type="text" id="currency" placeholder="Currency">
+            <input type="text" id="lang" placeholder="Language">
+            <input type="text" id="urlSuccess" placeholder="Success URL">
+            <input type="text" id="urlFailed" placeholder="Failed URL">
+            <input type="text" id="urlNotification" placeholder="Notification URL">
+            <button type="submit">Pagar</button>
+        </form>
     </main>
+
+    <script>
+        async function tropipayPay(event) {
+            event.preventDefault()
+
+            const reference = document.getElementById('reference').value
+            const concept = document.getElementById('concept').value
+            const description = document.getElementById('description').value
+            const amount = parseFloat(document.getElementById('amount').value)
+            const currency = document.getElementById('currency').value
+            const lang = document.getElementById('lang').value
+            const urlSuccess = document.getElementById('urlSuccess').value
+            const urlFailed = document.getElementById('urlFailed').value
+            const urlNotification = document.getElementById('urlNotification').value
+
+            const response = await fetch('https://stripe-back-3943.onrender.com/api/tropipay/pay', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    reference,
+                    concept,
+                    description,
+                    amount,
+                    currency,
+                    lang,
+                    urlSuccess,
+                    urlFailed,
+                    urlNotification,
+                }),
+            })
+
+            const data = await response.json()
+            window.location.href = data.url
+        }
+
+        document.getElementById('paymentForm').addEventListener('submit', tropipayPay)
+    </script>
 
 </body>
 
